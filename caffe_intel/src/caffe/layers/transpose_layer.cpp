@@ -38,7 +38,6 @@ void TransposeLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom,
 		"be greater than 0.";
 	CHECK_LE(shape.size(), kMaxBlobAxes) << "the dimension of the transposed blob should "
 		"be less than kMaxBlobAxes (" << kMaxBlobAxes << ").";
-	printf("shape.size(): %lu\n", shape.size());
 	CHECK_EQ(shape.size(), transpose_param_.dim_size()) << "the dimensions of "
 		"the top blob and bottom blob must be equal.";
 	vector<int> top_shape = permute(shape);
