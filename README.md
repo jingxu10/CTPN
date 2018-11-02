@@ -1,3 +1,43 @@
+# Overview:
+This repository is forked from qingswu/CTPN. CTPN specific layers are integrated into the standard BVLC Caffe (caffe_bvlc) and Intel optimized Caffe (caffe_intel). Performance was only tested on CPU.
+
+# Changes to Caffe distributions:
+1. Original implementation of lstm along with its header file are moved into directory "bk_layers". The functionality of lstm is provided by CTPN specific lstm_layer.
+2. CTPN specific layers, transpose and reverse, are copied into layers folder and enabled in both distributions.
+3. For Intel optimized Caffe, concat layer is locked to Caffe engine. Thus concat layer will have no MKL/MKL-DNN support.
+
+# How to run demo.py
+1. Build any/both of two caffe distributions
+```{bash}
+# cd caffe_bvlc [or caffe_intel]
+# mkdir release
+# cd release
+# cmake -D CPU_ONLY=ON -D BLAS=mkl .. <== for BVLC Caffe. Please make sure Intel MKL has been installed.
+# cmake ..                            <== for Intel optimized Caffe
+# make -j$(nproc)
+# make install <== this directory "install" ({INSTALL}) will be used in the following step
+```
+2. Build supporting package for the demo program
+
+   2.1 Modify the Makefile in {CTPN_ROOT} and add header file search directory where contains numpy/arrayobject.h. Change "-I/usr/local/lib/python2.7/dist-packages/numpy/core/include" to the path in your environment.
+
+   2.2 Run make to build supporting package.
+
+3. Run demo program
+```{bash}
+# wget ... <== Download model file to directory models
+# export PYTHONPATH={INSTALL}/python
+# python tools/demo.py --no-gpu
+```
+
+# Troubleshooting
+1. On some environments, running the demo program may invoke an error indicating libmpi.so.12 is missing. In this case, please set environment variable LD_LIBRARY_PATH to {CTPN_ROOT}/caffe_intel/external/mlsl/l_mlsl_<version>/intel64/lib.
+```{bash}
+export LD_LIBRARY_PATH={CTPN_ROOT}/caffe_intel/external/mlsl/l_mlsl_<version>/intel64/lib
+```
+
+# The following contents are kept from original repository
+
 # CUDA 8.0 compatible version
 1 . Updated caffe to current version, keeping the files that the official version doesn't have.
 
