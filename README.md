@@ -15,7 +15,7 @@ This repository is forked from qingswu/CTPN. CTPN specific layers are integrated
 # cmake -D CPU_ONLY=ON -D BLAS=mkl .. <== for BVLC Caffe. Please make sure Intel MKL has been installed.
 # cmake ..                            <== for Intel optimized Caffe
 # make -j$(nproc)
-# make install <== this directory "install" ({INSTALL}) will be used in the following step
+# make install                        <== this directory "install" ({INSTALL}) will be used in the following step
 ```
 2. Build supporting package for the demo program
 
@@ -25,7 +25,7 @@ This repository is forked from qingswu/CTPN. CTPN specific layers are integrated
 
 3. Run demo program
 ```{bash}
-# wget ... <== Download model file to directory models
+# wget http://textdet.com/downloads/ctpn_trained_model.caffemodel -P models
 # export PYTHONPATH={INSTALL}/python
 # python tools/demo.py --no-gpu
 ```
